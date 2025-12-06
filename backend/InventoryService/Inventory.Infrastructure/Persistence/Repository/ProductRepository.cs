@@ -1,5 +1,5 @@
 ﻿using KorpInventory.Core.Entities;
-using KorpInventory.Core.Interface;
+using KorpInventory.Core.Repository;
 using Microsoft.EntityFrameworkCore;
 
 namespace KorpInventory.Infrastructure.Persistence.Repository
@@ -14,7 +14,7 @@ namespace KorpInventory.Infrastructure.Persistence.Repository
 
         public async Task<Product?> GetByIdAsync(int id)
         {
-            return await _context.Products.FindAsync(id);
+            return await _context.Products.SingleOrDefaultAsync(p => p.Id == id); 
         }
 
         public async Task<Product?> GetByCodeAsync(string code)
@@ -49,11 +49,6 @@ namespace KorpInventory.Infrastructure.Persistence.Repository
                 _context.Products.Remove(product);
                 await _context.SaveChangesAsync();
             }
-        }
-
-        public async Task<bool> ExistsAsync(int id)
-        {
-            return await _context.Products.AnyAsync(p => p.Id == id);
         }
 
         public async Task<bool> CodeExistsAsync(string code, int? excludeId = null)

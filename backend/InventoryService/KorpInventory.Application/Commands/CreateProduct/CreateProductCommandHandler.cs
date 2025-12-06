@@ -1,6 +1,6 @@
 ﻿using KorpInventory.Application.ViewModel;
 using KorpInventory.Core.Entities;
-using KorpInventory.Core.Interface;
+using KorpInventory.Core.Repository;
 using MediatR;
 
 namespace KorpInventory.Application.Commands.CreateProduct

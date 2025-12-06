@@ -1,5 +1,5 @@
 using KorpInventory.Application.Commands.CreateProduct;
-using KorpInventory.Core.Interface;
+using KorpInventory.Core.Repository;
 using KorpInventory.Infrastructure.Persistence;
 using KorpInventory.Infrastructure.Persistence.Repository;
 using MediatR;

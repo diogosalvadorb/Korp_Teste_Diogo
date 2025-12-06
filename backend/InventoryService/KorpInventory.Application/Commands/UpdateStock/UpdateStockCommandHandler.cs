@@ -1,4 +1,4 @@
-﻿using KorpInventory.Core.Interface;
+﻿using KorpInventory.Core.Repository;
 using MediatR;
 
 namespace KorpInventory.Application.Commands.UpdateStock
