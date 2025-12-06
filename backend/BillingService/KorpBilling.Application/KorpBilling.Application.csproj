@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\KorpBilling.Core\KorpBilling.Core.csproj" />
+  </ItemGroup>
+
 </Project>
