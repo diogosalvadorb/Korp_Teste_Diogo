@@ -2,7 +2,7 @@
 {
     public enum InvoiceStatus
     {
-        Opne = 1,
+        Open = 1,
         Closed = 2
     }
 }
