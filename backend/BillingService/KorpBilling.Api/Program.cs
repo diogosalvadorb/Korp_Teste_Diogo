@@ -1,13 +1,21 @@
+using KorpBilling.Application.Commands.CreateInvoice;
+using KorpBilling.Core.Repository;
 using KorpBilling.Infrastructure.Persistence;
+using KorpBilling.Infrastructure.Persistence.Repository;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
 builder.Services.AddControllers();
-
 builder.Services.AddDbContext<BillingDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Connection")));
+
+builder.Services.AddScoped<IInvoiceRepository, InvoiceRepository>();
+builder.Services.AddHttpClient();
+
+builder.Services.AddMediatR(typeof(CreateInvoiceCommand));
 
 builder.Services.AddOpenApi();
 
@@ -19,6 +27,7 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
+app.MapScalarApiReference();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
