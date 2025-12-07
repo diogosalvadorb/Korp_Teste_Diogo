@@ -1,4 +1,7 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using KorpInventory.Application.Commands.CreateProduct;
+using KorpInventory.Application.Validators;
 using KorpInventory.Core.Repository;
 using KorpInventory.Infrastructure.Persistence;
 using KorpInventory.Infrastructure.Persistence.Repository;
@@ -15,6 +18,7 @@ builder.Services.AddDbContext<InventoryDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Connection")));
 
 builder.Services.AddMediatR(typeof(CreateProductCommand));
+builder.Services.AddFluentValidationAutoValidation().AddValidatorsFromAssemblyContaining<CreateProductCommandValidator>();
 
 builder.Services.AddOpenApi();
 
