@@ -20,6 +20,17 @@ builder.Services.AddDbContext<InventoryDbContext>(options =>
 builder.Services.AddMediatR(typeof(CreateProductCommand));
 builder.Services.AddFluentValidationAutoValidation().AddValidatorsFromAssemblyContaining<CreateProductCommandValidator>();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowNext", policy =>
+    {
+        policy.WithOrigins("http://localhost:4200")
+              .AllowAnyMethod()
+              .AllowAnyHeader()
+              .AllowCredentials();
+    });
+});
+
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
@@ -29,6 +40,8 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
+
+app.UseCors("AllowNext");
 app.MapScalarApiReference();
 app.UseHttpsRedirection();
 
