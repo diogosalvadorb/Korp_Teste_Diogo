@@ -14,7 +14,7 @@ namespace KorpInventory.Application.Validators
 
             RuleFor(x => x.Description)
                 .NotEmpty().WithMessage("A descrição do produto é obrigatória.")
-                .MinimumLength(7).WithMessage("O código deve ter no mínimo 5 caracteres.")
+                .MinimumLength(3).WithMessage("O código deve ter no mínimo 3 caracteres.")
                 .MaximumLength(200).WithMessage("A descrição deve ter no máximo 200 caracteres.");
 
             RuleFor(x => x.Price)
