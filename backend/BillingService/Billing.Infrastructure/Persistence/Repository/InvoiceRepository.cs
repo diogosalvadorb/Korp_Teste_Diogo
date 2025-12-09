@@ -49,7 +49,7 @@ namespace KorpBilling.Infrastructure.Persistence.Repository
         {
             var lastInvoice = await _context.Invoices
                 .OrderByDescending(i => i.Number)
-                .SingleOrDefaultAsync();
+                .FirstOrDefaultAsync();
 
             return lastInvoice?.Number + 1 ?? 1;
         }

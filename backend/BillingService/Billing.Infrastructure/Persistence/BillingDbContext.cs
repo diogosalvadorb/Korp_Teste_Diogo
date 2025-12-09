@@ -17,8 +17,9 @@ namespace KorpBilling.Infrastructure.Persistence
             {
                 builder.HasKey(i => i.Id);
 
-                builder.Property(i => i.Number)
-                    .IsRequired();
+                modelBuilder.Entity<Invoice>()
+                    .HasIndex(i => i.Number)
+                    .IsUnique();
 
                 builder.Property(i => i.Status)
                     .IsRequired()
