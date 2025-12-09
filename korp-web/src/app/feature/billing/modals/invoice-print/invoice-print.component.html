@@ -58,9 +58,11 @@
   <div class="actions">
     <button class="btn-secondary" (click)="close.emit()">Fechar</button>
 
-    <button class="btn-primary"
-            [disabled]="printing"
-            (click)="printNow()">
+    <button
+      *ngIf="showPrintButton && canPrint"
+      class="btn-primary"
+      [disabled]="printing"
+      (click)="printNow()">
       <span *ngIf="!printing">Imprimir</span>
       <span *ngIf="printing">Imprimindo...</span>
     </button>

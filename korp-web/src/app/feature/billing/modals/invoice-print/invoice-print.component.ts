@@ -14,7 +14,6 @@ export class InvoicePrintComponent {
 
   @Input() invoice: Invoice | null = null;
   @Input() showPrintButton: boolean = false;
-  @Input() loading: boolean = false;
   @Output() close = new EventEmitter<void>();
   @Output() printed = new EventEmitter<void>();
 
@@ -23,8 +22,12 @@ export class InvoicePrintComponent {
 
   constructor(private billingService: BillingService) {}
 
+  get canPrint(): boolean {
+    return this.invoice?.status === 1 && this.showPrintButton;
+  }
+
   printNow() {
-    if (!this.invoice) return;
+    if (!this.invoice || !this.canPrint) return;
 
     this.printing = true;
     this.message = "";

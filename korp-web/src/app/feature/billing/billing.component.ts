@@ -15,14 +15,11 @@ import { InvoicePrintComponent } from './modals/invoice-print/invoice-print.comp
 })
 export class BillingComponent implements OnInit {
   invoices: Invoice[] = [];
-  products: any[] = [];
-
   selectedInvoice: Invoice | null = null;
   isLoading = true;
   isPrintModalOpen = false;
   showPrintButton = false;
   showCreateModal = false;
-  loadingPrint = false;
 
   constructor(private billingService: BillingService) {}
 
@@ -31,6 +28,8 @@ export class BillingComponent implements OnInit {
   }
 
   loadInvoices() {
+    this.isLoading = true;
+
     this.billingService.getAll().subscribe({
       next: (data) => {
         this.invoices = data;
@@ -41,44 +40,32 @@ export class BillingComponent implements OnInit {
   }
 
   getStatusLabel(status: number): string {
-    if (status === 1) return 'Aberto';
-    if (status === 2) return 'Fechado';
-    return 'Desconhecido';
+    return status === 1 ? 'Aberto' : 'Fechado';
   }
 
   getStatusClass(status: number): string {
-    if (status === 1) return 'status-open';
-    if (status === 2) return 'status-closed';
-    return '';
+    return status === 1 ? 'status-open' : 'status-closed';
   }
 
   viewInvoice(inv: Invoice) {
-    this.selectedInvoice = null;
-    this.loadingPrint = true;
-
-    this.showPrintButton = false;
-
-    this.isPrintModalOpen = true;
-
-    this.billingService.getById(inv.id).subscribe({
-      next: (full) => {
-        this.selectedInvoice = full;
-        this.loadingPrint = false;
-      },
-      error: () => (this.loadingPrint = false),
-    });
+    this.openPrintModal(inv, false);
   }
 
   printInvoice(inv: Invoice) {
-    this.isPrintModalOpen = true;
-    this.loadingPrint = true;
+    this.openPrintModal(inv, true);
+  }
 
-    this.showPrintButton = true;
+  private openPrintModal(inv: Invoice, showPrintBtn: boolean) {
+    this.selectedInvoice = null;
+    this.showPrintButton = showPrintBtn;
+    this.isPrintModalOpen = true;
 
     this.billingService.getById(inv.id).subscribe({
       next: (full) => {
         this.selectedInvoice = full;
-        this.loadingPrint = false;
+      },
+      error: () => {
+        this.isPrintModalOpen = false;
       },
     });
   }
