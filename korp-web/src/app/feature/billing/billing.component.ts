@@ -3,20 +3,26 @@ import { CommonModule } from '@angular/common';
 import { BillingService } from './services/billing.service';
 import { Invoice } from './models/invoice.model';
 import { CreateInvoiceModalComponent } from './modals/create-invoice-modal/create-invoice-modal.component';
+import { CreateInvoiceItem } from './models/create-invoice-item.model';
+import { InvoicePrintComponent } from './modals/invoice-print/invoice-print.component';
 
 @Component({
   selector: 'app-billing',
   standalone: true,
-  imports: [CommonModule, CreateInvoiceModalComponent],
+  imports: [CommonModule, CreateInvoiceModalComponent, InvoicePrintComponent],
   templateUrl: './billing.component.html',
   styleUrls: ['./billing.component.scss'],
 })
 export class BillingComponent implements OnInit {
   invoices: Invoice[] = [];
   products: any[] = [];
-  isLoading = true;
 
+  selectedInvoice: Invoice | null = null;
+  isLoading = true;
+  isPrintModalOpen = false;
+  showPrintButton = false;
   showCreateModal = false;
+  loadingPrint = false;
 
   constructor(private billingService: BillingService) {}
 
@@ -47,23 +53,48 @@ export class BillingComponent implements OnInit {
   }
 
   viewInvoice(inv: Invoice) {
-    console.log('Visualizar NF:', inv);
+    this.selectedInvoice = null;
+    this.loadingPrint = true;
+
+    this.showPrintButton = false;
+
+    this.isPrintModalOpen = true;
+
+    this.billingService.getById(inv.id).subscribe({
+      next: (full) => {
+        this.selectedInvoice = full;
+        this.loadingPrint = false;
+      },
+      error: () => (this.loadingPrint = false),
+    });
   }
 
   printInvoice(inv: Invoice) {
-    console.log('Imprimir NF:', inv);
+    this.isPrintModalOpen = true;
+    this.loadingPrint = true;
+
+    this.showPrintButton = true;
+
+    this.billingService.getById(inv.id).subscribe({
+      next: (full) => {
+        this.selectedInvoice = full;
+        this.loadingPrint = false;
+      },
+    });
   }
 
   createInvoice() {
     this.showCreateModal = true;
   }
 
-  saveInvoice(items: any[]) {
+  saveInvoice(items: CreateInvoiceItem[]) {
     const payload = {
       items: items.map((i) => ({
-        productId: Number(i.productId),
-        quantity: Number(i.quantity),
-        unitPrice: Number(i.unitPrice),
+        productId: i.productId,
+        code: i.code,
+        description: i.description,
+        quantity: i.quantity,
+        unitPrice: i.unitPrice,
       })),
     };
 

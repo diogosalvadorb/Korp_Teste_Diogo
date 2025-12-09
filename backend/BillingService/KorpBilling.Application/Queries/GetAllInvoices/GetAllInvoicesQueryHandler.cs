@@ -27,6 +27,8 @@ namespace KorpBilling.Application.Queries.GetAllInvoices
                     ProductId = item.ProductId,
                     Quantity = item.Quantity,
                     UnitPrice = item.UnitPrice,
+                    Code = item.Code,
+                    Description = item.Description,
                     TotalPrice = item.TotalPrice
                 }).ToList(),
                 TotalAmount = i.TotalAmount

@@ -1,0 +1,75 @@
+<div class="modal-backdrop"></div>
+
+<div class="invoice-print-modal">
+  <div class="header">
+    <h3>Visualização da Nota Fiscal</h3>
+
+    <button class="close-btn" (click)="close.emit()">✕</button>
+  </div>
+
+  <div class="section-title">
+    <h2>NOTA FISCAL</h2>
+    <p class="invoice-number">Nº {{ invoice?.number }}</p>
+  </div>
+
+  <div class="info-grid">
+    <div>
+      <label>Data de Emissão</label>
+      <p>{{ invoice?.formattedDate }}</p>
+    </div>
+
+    <div>
+      <label>Status</label>
+      <p [class.status-open]="invoice?.status === 1"
+         [class.status-closed]="invoice?.status === 2">
+        {{ invoice?.status === 1 ? 'Aberta' : 'Fechada' }}
+      </p>
+    </div>
+  </div>
+
+  <hr />
+
+  <table class="item-table">
+    <thead>
+      <tr>
+        <th>Código</th>
+        <th>Descrição</th>
+        <th>Preço Unitário</th>
+        <th>Quantidade</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let item of invoice?.items">
+        <td>{{ item.code }}</td>
+        <td>{{ item.description }}</td>
+        <td>{{ item.formattedUnitPrice }}</td>
+        <td>{{ item.quantity }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <hr />
+
+  <div class="total-area">
+    Total: <strong>{{ invoice?.formattedTotal }}</strong>
+  </div>
+
+  <div class="actions">
+    <button class="btn-secondary" (click)="close.emit()">Fechar</button>
+
+    <button class="btn-primary"
+            [disabled]="printing"
+            (click)="printNow()">
+      <span *ngIf="!printing">Imprimir</span>
+      <span *ngIf="printing">Imprimindo...</span>
+    </button>
+  </div>
+
+  <div class="msg-success" *ngIf="message">{{ message }}</div>
+
+  <div class="loading-overlay" *ngIf="printing">
+    <div class="spinner"></div>
+    <p>Gerando impressão…</p>
+  </div>
+</div>

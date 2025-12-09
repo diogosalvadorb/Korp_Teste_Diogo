@@ -14,7 +14,15 @@ export class BillingService {
     return this.http.get<Invoice[]>(this.baseUrl);
   }
 
+  getById(id: number): Observable<Invoice> {
+    return this.http.get<Invoice>(`${this.baseUrl}/${id}`);
+  }
+
   create(model: CreateInvoiceModel): Observable<any> {
     return this.http.post(this.baseUrl, model);
+  }
+
+  printInvoice(id: number) {
+    return this.http.post(`${this.baseUrl}/${id}/print`, {});
   }
 }

@@ -65,6 +65,8 @@ namespace KorpBilling.Api.Controllers
                     {
                         ProductId = i.ProductId,
                         Quantity = i.Quantity,
+                        Code = i.Code,
+                        Description = i.Description,
                         UnitPrice = i.UnitPrice
                     }).ToList()
                 };

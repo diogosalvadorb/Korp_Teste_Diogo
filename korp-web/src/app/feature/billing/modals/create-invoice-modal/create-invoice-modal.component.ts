@@ -1,8 +1,7 @@
 import { Component, EventEmitter, Output, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { CreateInvoiceItem } from '../../models/create-invoice-item.model';
 import { FormsModule } from '@angular/forms';
+import { CreateInvoiceItem } from '../../models/create-invoice-item.model';
 import { Product } from '../../../product/models/product.model';
 import { ProductService } from '../../../product/services/product.service';
 
@@ -19,16 +18,30 @@ export class CreateInvoiceModalComponent implements OnInit {
 
   products: Product[] = [];
 
-  items: CreateInvoiceItem[] = [{ productId: 0, quantity: 1, unitPrice: 0 }];
+  items: CreateInvoiceItem[] = [
+    {
+      productId: 0,
+      code: '',
+      description: '',
+      quantity: 1,
+      unitPrice: 0
+    }
+  ];
 
   constructor(private productService: ProductService) {}
 
   ngOnInit() {
-    this.productService.getAll().subscribe((res) => (this.products = res));
+    this.productService.getAll().subscribe(res => this.products = res);
   }
 
   addItem() {
-    this.items.push({ productId: 0, quantity: 1, unitPrice: 0 });
+    this.items.push({
+      productId: 0,
+      code: '',
+      description: '',
+      quantity: 1,
+      unitPrice: 0
+    });
   }
 
   removeItem(index: number) {
@@ -37,11 +50,13 @@ export class CreateInvoiceModalComponent implements OnInit {
 
   updateUnitPrice(i: number) {
     const selected = this.products.find(
-      (p) => p.id === Number(this.items[i].productId)
+      p => p.id === Number(this.items[i].productId)
     );
 
     if (selected) {
       this.items[i].unitPrice = selected.price;
+      this.items[i].code = selected.code;
+      this.items[i].description = selected.description;
     }
   }
 

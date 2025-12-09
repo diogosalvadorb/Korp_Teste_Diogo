@@ -32,6 +32,8 @@ namespace KorpBilling.Application.Commands.CreateInvoice
                 {
                     ProductId = item.ProductId,
                     Quantity = item.Quantity,
+                    Code = item.Code,
+                    Description = item.Description,
                     UnitPrice = item.UnitPrice,
                     TotalPrice = item.Quantity * item.UnitPrice
                 }).ToList()
@@ -50,6 +52,8 @@ namespace KorpBilling.Application.Commands.CreateInvoice
                     Id = i.Id,
                     ProductId = i.ProductId,
                     Quantity = i.Quantity,
+                    Code = i.Code,
+                    Description = i.Description,
                     UnitPrice = i.UnitPrice,
                     TotalPrice = i.TotalPrice
                 }).ToList(),
