@@ -1,0 +1,38 @@
+<div class="modal-backdrop" (click)="cancel()"></div>
+
+<div class="modal-card">
+  <h4 class="title">{{ isEdit ? "Editar Produto" : "Cadastrar Produto" }}</h4>
+
+  <div *ngIf="errors.length > 0" class="error-box">
+    <ul>
+      <li *ngFor="let err of errors">{{ err }}</li>
+    </ul>
+  </div>
+
+  <div class="form-group">
+    <label>Código</label>
+    <input type="text" [(ngModel)]="formData.code" />
+  </div>
+
+  <div class="form-group">
+    <label>Descrição</label>
+    <input type="text" [(ngModel)]="formData.description" />
+  </div>
+
+  <div class="form-group">
+    <label>Preço</label>
+    <input type="number" step="0.01" [(ngModel)]="formData.price" />
+  </div>
+
+  <div class="form-group">
+    <label>Quantidade</label>
+    <input type="number" [(ngModel)]="formData.stockQuantity" />
+  </div>
+
+  <div class="actions">
+    <button class="btn btn-secondary" (click)="cancel()">Cancelar</button>
+    <button class="btn btn-primary" (click)="save()">
+      {{ isEdit ? "Salvar" : "Cadastrar" }}
+    </button>
+  </div>
+</div>

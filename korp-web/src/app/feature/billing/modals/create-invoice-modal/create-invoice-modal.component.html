@@ -1,0 +1,45 @@
+<div class="modal-backdrop"></div>
+
+<div class="invoice-modal">
+  <div class="modal-header">
+    <h4 class="modal-title">Criar Nota Fiscal</h4>
+    <button class="close-btn" (click)="cancel()">x</button>
+  </div>
+
+  <div class="modal-body">
+    <div *ngFor="let item of items; let i = index" class="item-row">
+      <select
+        class="form-select"
+        [(ngModel)]="item.productId"
+        (change)="updateUnitPrice(i)"
+      >
+        <option value="">Selecione um produto...</option>
+        <option *ngFor="let p of products" [value]="p.id">
+          {{ p.description }} — Estoque: {{ p.stockQuantity }}
+        </option>
+      </select>
+
+      <input
+        type="number"
+        min="1"
+        class="form-control quantity-input"
+        [(ngModel)]="item.quantity"
+      />
+
+      <button
+        class="remove-item-btn"
+        *ngIf="items.length > 1"
+        (click)="removeItem(i)"
+      >
+        ✕
+      </button>
+    </div>
+
+    <button class="add-item-btn" (click)="addItem()">+ Adicionar Item</button>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-secondary" (click)="cancel()">Cancelar</button>
+    <button class="btn btn-primary" (click)="confirm()">Criar Nota</button>
+  </div>
+</div>

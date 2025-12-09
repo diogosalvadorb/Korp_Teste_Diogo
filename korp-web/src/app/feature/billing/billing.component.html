@@ -85,3 +85,19 @@
     </div>
   </div>
 </div>
+
+<app-create-invoice-modal
+  *ngIf="showCreateModal"
+  (onCancel)="showCreateModal = false"
+  (onConfirm)="saveInvoice($event)">
+</app-create-invoice-modal>
+
+<app-invoice-print
+  *ngIf="isPrintModalOpen"
+  [invoice]="selectedInvoice"
+  [loading]="loadingPrint"
+  [showPrintButton]="showPrintButton"
+  (close)="isPrintModalOpen = false">
+</app-invoice-print>
+
+

@@ -19,17 +19,14 @@ namespace KorpBilling.Api.Controllers
             _mediator = mediator;
         }
 
-        /// <summary>
-        /// Obtém todas as notas fiscais
-        /// </summary>
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<InvoiceViewModel>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAll()
         {
             try
             {
                 var query = new GetAllInvoicesQuery();
                 var invoices = await _mediator.Send(query);
+
                 return Ok(invoices);
             }
             catch (Exception ex)
@@ -38,12 +35,7 @@ namespace KorpBilling.Api.Controllers
             }
         }
 
-        /// <summary>
-        /// Obtém uma nota fiscal por ID
-        /// </summary>
         [HttpGet("{id}")]
-        [ProducesResponseType(typeof(InvoiceViewModel), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetById(int id)
         {
             try
@@ -62,25 +54,19 @@ namespace KorpBilling.Api.Controllers
             }
         }
 
-        /// <summary>
-        /// Cria uma nova nota fiscal
-        /// </summary>
         [HttpPost]
-        [ProducesResponseType(typeof(InvoiceViewModel), StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Create([FromBody] CreateInvoiceViewModel viewModel)
         {
             try
             {
-                if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
-
                 var command = new CreateInvoiceCommand
                 {
                     Items = viewModel.Items.Select(i => new InvoiceItemCommand
                     {
                         ProductId = i.ProductId,
                         Quantity = i.Quantity,
+                        Code = i.Code,
+                        Description = i.Description,
                         UnitPrice = i.UnitPrice
                     }).ToList()
                 };
@@ -98,12 +84,7 @@ namespace KorpBilling.Api.Controllers
             }
         }
 
-        /// <summary>
-        /// Imprime uma nota fiscal (fecha a nota e atualiza o estoque)
-        /// </summary>
         [HttpPost("{id}/print")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Print(int id)
         {
             try
