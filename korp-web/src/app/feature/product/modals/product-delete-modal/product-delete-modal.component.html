@@ -1,0 +1,14 @@
+<div class="modal-backdrop" (click)="cancel()"></div>
+
+<div class="modal-card">
+  <h4 class="title">Confirmar Exclusão</h4>
+
+  <p class="message">
+    Deseja realmente excluir o produto <strong>{{ productName }}</strong>?
+  </p>
+
+  <div class="actions">
+    <button class="btn btn-secondary" (click)="cancel()">Cancelar</button>
+    <button class="btn btn-danger" (click)="confirm()">Excluir</button>
+  </div>
+</div>

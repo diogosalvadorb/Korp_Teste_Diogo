@@ -1,0 +1,56 @@
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(3px);
+  z-index: 9000;
+}
+
+.modal-card {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  width: 360px;
+  padding: 26px;
+  border-radius: 12px;
+
+  background: #ffffff;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.22);
+
+  z-index: 9001;
+  animation: fadeIn 0.25s ease-out;
+}
+
+.title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #b91c1c;
+}
+
+.message {
+  margin-top: 12px;
+  font-size: 0.95rem;
+  color: #4b5563;
+  line-height: 1.4;
+}
+
+.actions {
+  margin-top: 22px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+// animação
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -46%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}

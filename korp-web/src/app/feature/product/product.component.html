@@ -72,3 +72,20 @@
     </div>
   </div>
 </div>
+
+<app-product-form-modal
+  *ngIf="showFormModal"
+  [isEdit]="selectedProduct !== null"
+  [formData]="formData"
+  [errors]="formErrors"
+  (onSave)="saveProduct($event)"
+  (onCancel)="showFormModal = false">
+</app-product-form-modal>
+
+
+<app-product-delete-modal
+  *ngIf="showDeleteModal"
+  [productName]="selectedProduct?.description || ''"
+  (onConfirm)="confirmDelete()"
+  (onCancel)="showDeleteModal = false">
+</app-product-delete-modal>
