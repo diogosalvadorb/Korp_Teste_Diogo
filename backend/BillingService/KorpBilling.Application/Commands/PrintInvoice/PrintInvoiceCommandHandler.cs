@@ -55,15 +55,12 @@ namespace KorpBilling.Application.Commands.PrintInvoice
                     if (!response.IsSuccessStatusCode)
                     {
                         var errorContent = await response.Content.ReadAsStringAsync(cancellationToken);
-                        throw new HttpRequestException(
-                            $"Erro ao atualizar estoque do produto {item.ProductId}. " +
-                            $"Status: {response.StatusCode}. Detalhes: {errorContent}");
+                        throw new HttpRequestException(errorContent);
                     }
                 }
                 catch (HttpRequestException ex)
                 {
-                    throw new InvalidOperationException(
-                        $"Falha ao comunicar com o serviço de estoque: {ex.Message}", ex);
+                    throw new InvalidOperationException(ex.Message);
                 }
             }
 

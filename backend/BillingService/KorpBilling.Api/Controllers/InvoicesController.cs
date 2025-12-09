@@ -92,27 +92,19 @@ namespace KorpBilling.Api.Controllers
                 var command = new PrintInvoiceCommand { InvoiceId = id };
                 await _mediator.Send(command);
 
-                return Ok(new
-                {
-                    message = "Nota fiscal impressa com sucesso.",
-                    details = "Status atualizado para Fechada e estoque atualizado."
-                });
+                return Ok(new { message = "Nota fiscal impressa com sucesso." });
             }
             catch (InvalidOperationException ex)
             {
-                return BadRequest(new { message = ex.Message });
+                return BadRequest(ex);
             }
             catch (HttpRequestException ex)
             {
-                return StatusCode(500, new
-                {
-                    message = "Erro ao comunicar com o serviço de estoque.",
-                    error = ex.Message
-                });
+                return StatusCode(500, ex);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = "Erro ao imprimir nota fiscal.", error = ex.Message });
+                return StatusCode(500, ex);
             }
         }
     }
