@@ -21,7 +21,7 @@
     <div>
       <label>Status</label>
       <p [class.status-open]="invoice?.status === 1"
-         [class.status-closed]="invoice?.status === 2">
+        [class.status-closed]="invoice?.status === 2">
         {{ invoice?.status === 1 ? 'Aberta' : 'Fechada' }}
       </p>
     </div>
@@ -55,6 +55,16 @@
     Total: <strong>{{ invoice?.formattedTotal }}</strong>
   </div>
 
+  <div *ngIf="errorMessages.length > 0" class="error-box">
+    <ul>
+      <li *ngFor="let err of errorMessages">{{ err }}</li>
+    </ul>
+  </div>
+
+  <div class="success-box" *ngIf="successMessage">
+    {{ successMessage }}
+  </div>
+
   <div class="actions">
     <button class="btn-secondary" (click)="close.emit()">Fechar</button>
 
@@ -67,8 +77,6 @@
       <span *ngIf="printing">Imprimindo...</span>
     </button>
   </div>
-
-  <div class="msg-success" *ngIf="message">{{ message }}</div>
 
   <div class="loading-overlay" *ngIf="printing">
     <div class="spinner"></div>

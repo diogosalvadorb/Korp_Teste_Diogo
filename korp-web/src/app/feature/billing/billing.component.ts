@@ -5,6 +5,7 @@ import { Invoice } from './models/invoice.model';
 import { CreateInvoiceModalComponent } from './modals/create-invoice-modal/create-invoice-modal.component';
 import { CreateInvoiceItem } from './models/create-invoice-item.model';
 import { InvoicePrintComponent } from './modals/invoice-print/invoice-print.component';
+import { ToastService } from '../../core/service/toast.service';
 
 @Component({
   selector: 'app-billing',
@@ -21,7 +22,7 @@ export class BillingComponent implements OnInit {
   showPrintButton = false;
   showCreateModal = false;
 
-  constructor(private billingService: BillingService) {}
+  constructor(private billingService: BillingService, private toastService: ToastService) {}
 
   ngOnInit(): void {
     this.loadInvoices();
@@ -35,7 +36,10 @@ export class BillingComponent implements OnInit {
         this.invoices = data;
         this.isLoading = false;
       },
-      error: () => (this.isLoading = false),
+      error: () => {
+        this.toastService.error("Erro ao carregar notas fiscais");
+        this.isLoading = false;
+      },
     });
   }
 
@@ -65,6 +69,7 @@ export class BillingComponent implements OnInit {
         this.selectedInvoice = full;
       },
       error: () => {
+        this.toastService.error("Erro ao carregar nota fiscal");
         this.isPrintModalOpen = false;
       },
     });
@@ -89,7 +94,12 @@ export class BillingComponent implements OnInit {
       next: () => {
         this.showCreateModal = false;
         this.loadInvoices();
+        this.toastService.success("Nota fiscal criada com sucesso!");
       },
+      error: (err) => {
+        const errorMessage = err.error?.message || "Erro ao criar nota fiscal";
+        this.toastService.error(errorMessage);
+      }
     });
   }
 }
