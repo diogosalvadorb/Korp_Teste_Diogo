@@ -20,6 +20,7 @@ namespace KorpBilling.Infrastructure.Persistence.Repository
         public async Task<Invoice?> GetByIdWithItemsAsync(int id)
         {
             return await _context.Invoices
+                .AsNoTracking()
                 .Include(i => i.Items)
                 .SingleOrDefaultAsync(i => i.Id == id);
         }
@@ -27,6 +28,7 @@ namespace KorpBilling.Infrastructure.Persistence.Repository
         public async Task<IEnumerable<Invoice>> GetAllAsync()
         {
             return await _context.Invoices
+                .AsNoTracking()
                 .Include(i => i.Items)
                 .OrderByDescending(i => i.CreatedAt)
                 .ToListAsync();
@@ -48,6 +50,7 @@ namespace KorpBilling.Infrastructure.Persistence.Repository
         public async Task<int> GetNextInvoiceNumberAsync()
         {
             var lastInvoice = await _context.Invoices
+                .AsNoTracking()
                 .OrderByDescending(i => i.Number)
                 .FirstOrDefaultAsync();
 

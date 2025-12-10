@@ -20,12 +20,15 @@ namespace KorpInventory.Infrastructure.Persistence.Repository
         public async Task<Product?> GetByCodeAsync(string code)
         {
             return await _context.Products
+                .AsNoTracking()
                 .SingleOrDefaultAsync(p => p.Code == code);
         }
 
         public async Task<IEnumerable<Product>> GetAllAsync()
         {
-            return await _context.Products.ToListAsync();
+            return await _context.Products
+                .AsNoTracking()
+                .ToListAsync();
         }
 
         public async Task<Product> AddAsync(Product product)
