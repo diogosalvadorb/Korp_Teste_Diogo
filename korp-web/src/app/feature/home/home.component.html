@@ -1,1 +1,66 @@
-<p>home works!</p>
+<div class="home-container">
+  <div class="brand-section">
+    <h1 class="brand-title">Korp</h1>
+    <p class="brand-subtitle">Sistema de Gestão Empresarial</p>
+  </div>
+
+  <div class="cards-grid">
+    <div class="info-card card-blue">
+      <div class="card-icon">
+        <i class="fa-solid fa-box"></i>
+      </div>
+      <div class="card-content">
+        <div class="card-value" *ngIf="!loading">{{ totalProducts }}</div>
+        <div class="card-value" *ngIf="loading">---</div>
+        <div class="card-label">Produtos Cadastrados</div>
+      </div>
+    </div>
+
+    <div class="info-card card-green">
+      <div class="card-icon">
+        <i class="fa-solid fa-file-invoice"></i>
+      </div>
+      <div class="card-content">
+        <div class="card-value" *ngIf="!loading">{{ totalInvoices }}</div>
+        <div class="card-value" *ngIf="loading">---</div>
+        <div class="card-label">Notas Fiscais</div>
+      </div>
+    </div>
+
+    <div class="info-card card-purple">
+      <div class="card-icon">
+        <i class="fa-solid fa-boxes-stacked"></i>
+      </div>
+      <div class="card-content">
+        <div class="card-value" *ngIf="!loading">{{ totalStock }}</div>
+        <div class="card-value" *ngIf="loading">---</div>
+        <div class="card-label">Itens em Estoque</div>
+      </div>
+    </div>
+
+    <div class="info-card card-orange">
+      <div class="card-icon">
+        <i class="fa-solid fa-circle-check"></i>
+      </div>
+      <div class="card-content">
+        <div class="card-value" *ngIf="!loading">{{ openInvoices }}</div>
+        <div class="card-value" *ngIf="loading">---</div>
+        <div class="card-label">Notas Abertas</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="quick-actions">
+    <h3 class="section-title">Ações Rápidas</h3>
+    <div class="actions-grid">
+      <button class="action-btn" routerLink="/product">
+        <i class="fa-solid fa-plus"></i>
+        <span>Novo Produto</span>
+      </button>
+      <button class="action-btn" routerLink="/billing">
+        <i class="fa-solid fa-file-invoice"></i>
+        <span>Nova Nota Fiscal</span>
+      </button>
+    </div>
+  </div>
+</div>

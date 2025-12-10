@@ -6,6 +6,7 @@ import { UpdateProductModel } from './models/update-product.model';
 import { ProductService } from './services/product.service';
 import { ProductFormModalComponent } from './modals/product-form-modal/product-form-modal.component';
 import { ProductDeleteModalComponent } from './modals/product-delete-modal/product-delete-modal.component';
+import { ToastService } from '../../core/service/toast.service';
 
 @Component({
   selector: 'app-products',
@@ -27,8 +28,8 @@ export class ProductComponent implements OnInit {
   formData!: CreateProductModel | UpdateProductModel;
   formErrors: string[] = [];
 
-  constructor(private productService: ProductService) {}
-  
+  constructor(private productService: ProductService, private toastService: ToastService) {}
+
   ngOnInit(): void {
     this.loadProducts();
   }
@@ -42,7 +43,7 @@ export class ProductComponent implements OnInit {
         this.isLoading = false;
       },
       error: () => {
-        console.error("Erro ao carregar produtos");
+        this.toastService.error("Erro ao carregar produtos");
         this.isLoading = false;
       }
     });
@@ -76,7 +77,8 @@ export class ProductComponent implements OnInit {
   }
 
   saveProduct(data: any) {
-    const request = this.selectedProduct
+    const isEdit = !!this.selectedProduct;
+    const request = isEdit
       ? this.productService.update(data)
       : this.productService.create(data);
 
@@ -85,6 +87,11 @@ export class ProductComponent implements OnInit {
         this.loadProducts();
         this.showFormModal = false;
         this.formErrors = [];
+
+        const message = isEdit
+          ? "Produto atualizado com sucesso!"
+          : "Produto cadastrado com sucesso!";
+        this.toastService.success(message);
       },
       error: (err) => {
         this.formErrors = this.extractErrors(err);
@@ -106,20 +113,10 @@ export class ProductComponent implements OnInit {
     }
 
     if (errors.length === 0) {
-      errors.push('Ocorreu um erro inesperado ao salvar o produto.');
+      errors.push("Ocorreu um erro inesperado ao salvar o produto.");
     }
 
     return errors;
-  }
-
-  mapErrors(errors: any): string[] {
-    if (!errors) return [];
-
-    const result: string[] = [];
-    for (const key of Object.keys(errors)) {
-      result.push(...errors[key]);
-    }
-    return result;
   }
 
   deleteProduct(product: Product) {
@@ -134,13 +131,11 @@ export class ProductComponent implements OnInit {
       next: () => {
         this.loadProducts();
         this.showDeleteModal = false;
+        this.toastService.success("Produto excluído com sucesso!");
       },
-      error: () => console.error("Erro ao excluir produto")
+      error: () => {
+        this.toastService.error("Erro ao excluir produto");
+      }
     });
-  }
-
-  searchProduct(event: any) {
-    const value = event.target.value.toLowerCase();
-    console.log("Pesquisar:", value);
   }
 }
