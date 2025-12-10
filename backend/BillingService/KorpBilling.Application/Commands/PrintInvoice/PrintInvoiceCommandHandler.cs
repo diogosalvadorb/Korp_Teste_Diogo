@@ -25,9 +25,9 @@ namespace KorpBilling.Application.Commands.PrintInvoice
         {
             var invoice = await _repository.GetByIdWithItemsAsync(request.InvoiceId);
 
-            if (invoice == null)
+            if (invoice.Status == InvoiceStatus.Closed)
             {
-                throw new InvalidOperationException($"Nota fiscal com ID {request.InvoiceId} não encontrada.");
+                return Unit.Value;
             }
 
             if (invoice.Status != InvoiceStatus.Open)
