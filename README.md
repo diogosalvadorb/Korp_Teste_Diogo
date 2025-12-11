@@ -1,12 +1,13 @@
 # 📦 Sistema Korp — Gestão de Estoque e Notas Fiscais
+Sistema completo de gestão empresarial desenvolvido com Angular 19 e .NET 9, utilizando arquitetura de microserviços e Clean Architecture. O sistema permite o gerenciamento de produtos, controle de estoque e emissão de notas fiscais de forma integrada.
 
-## 📋 Índice
+# 📋 Índice
 - [Funcionalidades](#funcionalidades)
 - [Tecnologias Utilizadas](#tecnologias-utilizadas)
 - [Pré-requisito](#pré-requisitos)
 - [Como Instalar e Executar o Projeto](#como-instalar-e-executar-o-projeto)
 
-## Funcionalidades
+# Funcionalidades
 
 ## 📦 Gerenciamento de Produtos
 - Cadastro de produtos com código único  
@@ -25,7 +26,7 @@
 - Validação de estoque disponível  
 - Comunicação entre microserviços  
 
-# 🚀 Tecnologias Utilizadas
+# Tecnologias Utilizadas
 
 ## Frontend
 - Angular 19.2  
@@ -43,7 +44,7 @@
 - FluentValidation 11.3  
 - Scalar 2.11 (OpenAPI Documentation)  
 
-# 📋 Pré-requisitos
+# Pré-requisitos
 
 ## Backend
 - .NET 9 SDK  
@@ -60,7 +61,7 @@
 - Postman / Insomnia  
 - SQL Server Management Studio  
 
-# 🔧 Como Instalar e Executar o Projeto
+# Como Instalar e Executar o Projeto
 
 ## 1️⃣ Clonar o Repositório
 ```bash
