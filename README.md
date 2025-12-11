@@ -6,9 +6,7 @@
 - [Pré-requisito](#pré-requisitos)
 - [Como Instalar e Executar o Projeto](#como-instalar-e-executar-o-projeto)
 
-
-  
-# ✨ Funcionalidades
+## Funcionalidades
 
 ## 📦 Gerenciamento de Produtos
 - Cadastro de produtos com código único  
